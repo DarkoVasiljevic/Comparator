@@ -30,5 +30,4 @@ Api contains three endpoints:
                                    Response body : { "resultType": "ContentDoNotMatch", "diffs": [{ "offset": 0, "length": 2 }] },
                       On error   = Status Code : 404 Not Found.
 
-Testing:
-  >>  Use Swagger or Postman <=> Example { "data": "string" }
+For testing use Swagger or Postman <=> { "data": "string" }.
