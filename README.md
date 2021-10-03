@@ -5,8 +5,8 @@ Enables comparison of two strings and provide the result.
 ```bash
 Api contains three endpoints:
 
-  >>  Request URL <=> PUT,
-      Method      <=> https:://localhost:44389/v1/diff/<ID>/left, 
+  >>  Method      <=> PUT,
+      Request URL <=> https:://localhost:44389/v1/diff/<ID>/left, 
       Usage       <=> Creates a 'left' string with <ID> if it does not exist or updates it if it exists,
                       On success = Satatus Code : 201 Created,
                       On error   = Satatus Code : 400 Bad Request.
