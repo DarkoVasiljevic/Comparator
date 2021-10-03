@@ -25,7 +25,7 @@ Api contains three endpoints:
                       On success = Status Code : 200 OK , 
                                    Response body : { "resultType": "Equals", "diffs": [] },
                                 || Status Code : 200 OK , 
-                                   Response body : { "resultType": "SizeDoNotEqual", "diffs": [] },
+                                   Response body : { "resultType": "SizeDoNotMatch", "diffs": [] },
                                 || Status Code : 200 OK , 
-                                   Response body : { "resultType": "ContentDoNotEqual", "diffs": [{ "offset": 0, "length": 2 }] },
+                                   Response body : { "resultType": "ContentDoNotMatch", "diffs": [{ "offset": 0, "length": 2 }] },
                       On error   = Status Code : 404 Not Found.
