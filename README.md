@@ -22,10 +22,10 @@ Api contains three endpoints:
       Usage       <=> Compare two strings and return result:
                       If one of the strings with <ID> does not exist return Response: 404 Not Found,
                       If both strings exists returns:
-                      On success = Status Code : 200 OK , Response body : { "resultType": "Equals", 
-                                                                            "diffs": [] },
-                                || Status Code : 200 OK , Response body : { "resultType": "SizeDoNotEqual", 
-                                                                            "diffs": [] },
-                                || Status Code : 200 OK , Response body : { "resultType": "ContentDoNotEqual", 
-                                                                            "diffs": [{ "offset": 0, "length": 2 }] },
+                      On success = Status Code : 200 OK , 
+                                   Response body : { "resultType": "Equals", "diffs": [] },
+                                || Status Code : 200 OK , 
+                                   Response body : { "resultType": "SizeDoNotEqual", "diffs": [] },
+                                || Status Code : 200 OK , 
+                                   Response body : { "resultType": "ContentDoNotEqual", "diffs": [{ "offset": 0, "length": 2 }] },
                       On error   = Status Code : 404 Not Found.
