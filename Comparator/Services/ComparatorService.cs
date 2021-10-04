@@ -5,7 +5,10 @@ using Comparator.Models;
 using Comparator.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Comparator.Services
@@ -78,7 +81,7 @@ namespace Comparator.Services
             try
             {
                 var one = _mapper.Map<Right>(data);
-               
+
                 return await _rightRepo.InsertOneWithCustomId(id, one);
             }
             catch (Exception ex)
@@ -161,7 +164,7 @@ namespace Comparator.Services
         {
             if (left == null || right == null) return null;
 
-            var (resultType, diffs) = await Task.Run(() => CompareLeftAndRight(left.Data, right.Data));
+            var (resultType, diffs) = await Task.Run(() => CompareLeftAndRightEncoded(left.Data, right.Data));
             await Task.Run(() => InsertResultAndDiffs(id, resultType, diffs));
 
             var result = await _resultRepo.GetLatestResultByLeftAndRightId(id);
@@ -180,20 +183,33 @@ namespace Comparator.Services
             return result;
         }
 
-        public (TypeOfResult, Dictionary<int, int>) CompareLeftAndRight(string left, string right)
+        private List<byte> Base64Decode(string encoded)
         {
+            var bytes = Convert.FromBase64String(encoded);
+
+            var list = new List<byte>();
+            bytes.ToList().ForEach(b => list.Add(b));
+
+            return list;
+        }
+
+        public (TypeOfResult, Dictionary<int, int>) CompareLeftAndRightEncoded(string leftEncoded, string rightEncoded)
+        {
+            var left = Base64Decode(leftEncoded);
+            var right = Base64Decode(rightEncoded);
+
             var diffs = new Dictionary<int, int>();
 
-            if (!left.Length.Equals(right.Length))
+            if (!left.Count.Equals(right.Count))
                 return (TypeOfResult.SizeDoNotMatch, diffs);
 
             var isEqual = left.SequenceEqual(right);
             if (isEqual)
                 return (TypeOfResult.Equals, diffs);
 
-            var allDiffs = new Dictionary<int, char>();
+            var allDiffs = new Dictionary<int, byte>();
 
-            for (int i = 0; i < left.Length; i++)
+            for (int i = 0; i < left.Count; i++)
             {
                 if (!left[i].Equals(right[i]))
                     allDiffs.Add(i, right[i]);

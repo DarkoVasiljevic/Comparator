@@ -83,9 +83,18 @@ namespace Comparator.Controllers.v1
 
         private bool ValidateData(DataRequest data)
         {
-            if (data is null || data.Data is null) return false;
+            try
+            {
+                if (data is null || data.Data is null) return false;
 
-            return true;
+                var bytes = Convert.FromBase64String(data.Data);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
