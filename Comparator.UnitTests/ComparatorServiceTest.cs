@@ -30,28 +30,28 @@ namespace Comparator.UnitTests
         }
 
         [Theory]
-        [InlineData("AAABBB", "AABB")]
-        [InlineData("AABB", "AAABBB")]
+        [InlineData("YXV0bw==", "bW90b3I=")]
+        [InlineData("bW90b3I=", "YXV0bw==")]
         public void CompareLeftAndRight_WhenStringsAreWithDifferentSizes_ShouldReturnSizeDoNotMatch(string left, string right)
         {
             // Arrange
 
             // Act
-            var (resultType, _) = _comparatorService.CompareLeftAndRight(left, right);
+            var (resultType, _) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.Equal(TypeOfResult.SizeDoNotMatch, resultType);
         }
 
         [Theory]
-        [InlineData("AAABBB", "AABB")]
-        [InlineData("AABB", "AAABBB")]
+        [InlineData("YXV0bw==", "bW90b3I=")]
+        [InlineData("bW90b3I=", "YXV0bw==")]
         public void CompareLeftAndRight_WhenStringsAreWithDifferentSizes_ShouldReturnEmptyDictionary(string left, string right)
         {
             // Arrange
 
             // Act
-            var (_, diffs) = _comparatorService.CompareLeftAndRight(left, right);
+            var (_, diffs) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.True(diffs.Count == 0);
@@ -61,28 +61,27 @@ namespace Comparator.UnitTests
         public void CompareLeftAndRight_WhenStringsAreDifferentButWithEqualSize_ShouldReturnContentDoNotMatch()
         {
             // Arrange
-            string left = "AAABBB";
-            string right = "AABBCC";
+            string left = "YXV0bw==";
+            string right = "bW90bw==";
 
             // Act
-            var (resultType, _) = _comparatorService.CompareLeftAndRight(left, right);
+            var (resultType, _) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.Equal(TypeOfResult.ContentDoNotMatch, resultType);
         }
 
         [Theory]
-        [InlineData("AAABBB", "AABBAA")]
-        [InlineData("AABBAA", "AAABBB")]
+        [InlineData("AAAAAA==", "AQABAQ==")]
         public void CompareLeftAndRight_WhenStringsAreDifferentButWithEqualSize_ShouldReturnDictionaryWithDiffs(string left, string right)
         {
             // Arrange
             var diffsMock = new Dictionary<int, int>();
-            diffsMock.Add(2, 1);
-            diffsMock.Add(4, 2);
+            diffsMock.Add(0, 1);
+            diffsMock.Add(2, 2);
 
             // Act
-            var (_, diffs) = _comparatorService.CompareLeftAndRight(left, right);
+            var (_, diffs) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.True(diffsMock.Count == 2);
@@ -93,11 +92,11 @@ namespace Comparator.UnitTests
         public void CompareLeftAndRight_WhenStringsAreEqualAndWithEqualSize_ShouldReturnEqual()
         {
             // Arrange
-            string left = "AAABBB";
-            string right = "AAABBB";
+            string left = "YXV0bw==";
+            string right = "YXV0bw==";
 
             // Act
-            var (resultType, _) = _comparatorService.CompareLeftAndRight(left, right);
+            var (resultType, _) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.Equal(TypeOfResult.Equals, resultType);
@@ -107,11 +106,11 @@ namespace Comparator.UnitTests
         public void CompareLeftAndRight_WhenStringsAreEqualAndWithEqualSize_ShouldReturnEmptyDictionary()
         {
             // Arrange
-            string left = "AAABBB";
-            string right = "AAABBB";
+            string left = "YXV0bw==";
+            string right = "YXV0bw==";
 
             // Act
-            var (_, diffs) = _comparatorService.CompareLeftAndRight(left, right);
+            var (_, diffs) = _comparatorService.CompareLeftAndRightEncoded(left, right);
 
             //Assert
             Assert.True(diffs.Count == 0);
@@ -240,7 +239,7 @@ namespace Comparator.UnitTests
         {
             // Arrange
             int id = 1;
-            string data = "AABBCC";
+            string data = "YXV0bw==";
             Left left = new Left
             {
                 Id = id,
@@ -285,8 +284,8 @@ namespace Comparator.UnitTests
         {
             // Arrange
             int id = 1;
-            string leftData  = "AABBCC";
-            string rightData = "ABBBCC";
+            string leftData = "YXV0bw==";
+            string rightData = "YXV0bw==";
 
             Left left = new Left
             {
@@ -324,7 +323,7 @@ namespace Comparator.UnitTests
 
             // CompareAndInsertResult
             var diffs = new Dictionary<int, int> { { offset, length } };
-            _serviceMock.Setup(e => e.CompareLeftAndRight(left.Data, right.Data)).Returns((TypeOfResult.ContentDoNotMatch, diffs));
+            _serviceMock.Setup(e => e.CompareLeftAndRightEncoded(left.Data, right.Data)).Returns((TypeOfResult.ContentDoNotMatch, diffs));
 
             // InsertResultAndDiffs
             _resultRepoMock.Setup(e => e.InsertOne(result)).ReturnsAsync((true, id));

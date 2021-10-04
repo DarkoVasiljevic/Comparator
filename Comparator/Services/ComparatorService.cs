@@ -185,12 +185,18 @@ namespace Comparator.Services
 
         private List<byte> Base64Decode(string encoded)
         {
-            var bytes = Convert.FromBase64String(encoded);
+            try
+            {
+                var list = new List<byte>();
+                var bytes = Convert.FromBase64String(encoded);
+                bytes.ToList().ForEach(b => list.Add(b));
 
-            var list = new List<byte>();
-            bytes.ToList().ForEach(b => list.Add(b));
-
-            return list;
+                return list;
+            }
+            catch (Exception)
+            {
+                return new List<byte>();
+            }
         }
 
         public (TypeOfResult, Dictionary<int, int>) CompareLeftAndRightEncoded(string leftEncoded, string rightEncoded)

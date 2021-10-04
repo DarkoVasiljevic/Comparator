@@ -85,7 +85,7 @@ namespace Comparator.Controllers.v1
         {
             try
             {
-                if (data is null || data.Data is null) return false;
+                if (data is null || string.IsNullOrWhiteSpace(data.Data)) return false;
 
                 var bytes = Convert.FromBase64String(data.Data);
 

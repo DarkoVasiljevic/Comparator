@@ -61,7 +61,7 @@ namespace Comparator.UnitTests
             // Arrange
             DataRequest request = new DataRequest
             {
-                Data = "string"
+                Data = "YXV0b21vYmls"
             };
             _serviceMock.Setup(e => e.InsertOrUpdateLeftAsync(It.IsAny<int>(), request)).ReturnsAsync(() => true);
 
@@ -112,7 +112,7 @@ namespace Comparator.UnitTests
             // Arrange
             DataRequest request = new DataRequest
             {
-                Data = "string"
+                Data = "YXV0b21vYmls"
             };
             _serviceMock.Setup(e => e.InsertOrUpdateRightAsync(It.IsAny<int>(), request)).ReturnsAsync(() => true);
 

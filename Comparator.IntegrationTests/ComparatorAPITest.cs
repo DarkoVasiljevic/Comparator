@@ -18,9 +18,6 @@ namespace Comparator.IntegrationTests
         protected readonly TestFactory _factory;
         protected readonly HttpClient _client;
 
-        private static DbContextOptions<DBContext> _dbOptions;
-        private readonly DBContext _dbContext;
-
         public ComparatorAPITest(TestFactory fixture)
         {
             _factory = fixture;
@@ -48,7 +45,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "Equal",
+                Data = "AQABAQ==",
             };
 
             // Act
@@ -66,7 +63,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "SizeDoNotMatch_Left",
+                Data = "YXV0bw==", // auto
             };
 
             // Act
@@ -84,7 +81,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "ContentDoNotMatch_Left_Right",
+                Data = "bW90b3M=", // motos
             };
 
             // Act
@@ -102,7 +99,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "Equal",
+                Data = "AQABAQ==",
             };
 
             // Act
@@ -120,7 +117,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "SizeDoNotMatch_Right",
+                Data = "bW90b3Jz", // motors
             };
 
             // Act
@@ -138,7 +135,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "ContentDoNotMatch_Right_Left",
+                Data = "YXV0b3M=", // autos
             };
 
             // Act
@@ -204,7 +201,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "test_add_update",
+                Data = "YXV0b3M=", // autos
             };
 
             // Act
@@ -222,7 +219,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "test_add_update",
+                Data = "YXV0bw==", // auto
             };
 
             // Act
@@ -240,7 +237,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "test_add_update",
+                Data = "YXV0b3M=", // autos
             };
 
             // Act
@@ -258,7 +255,7 @@ namespace Comparator.IntegrationTests
             // Arrange
             DataRequest data = new DataRequest
             {
-                Data = "test_add_update",
+                Data = "YXV0bw==", // auto
             };
 
             // Act
